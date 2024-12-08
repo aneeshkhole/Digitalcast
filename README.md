@@ -1,13 +1,4 @@
 # Digitalcast: A Cloud-Based Digital Signage Solution
-Datacenter Scale Computing (Fall 2024) - CSCI 5253-872
-
-Instructor: Prof. Eric Keller
-
-Fall 2024
-
-Team 71 members:
-- Aneesh Khole
-- Uttara Ketkar
 
 ## Overview
 Digitalcast is a scalable, cloud-based digital signage solution designed to facilitate media upload, scheduling, and display. It leverages Google Cloud Platform (GCP) services, including Google Cloud Storage (GCS), Pub/Sub, and Kubernetes, to provide a robust and user-friendly platform for managing digital signage content.
