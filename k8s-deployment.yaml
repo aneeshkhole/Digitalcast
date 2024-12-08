@@ -15,7 +15,7 @@ spec:
       containers:
       # Flask application container
       - name: digitalcast-ui
-        image: gcr.io/dcsc2024-437017/digitalcast-ui:latest
+        image: gcr.io/<your_gcr_repository/DockerHub>/digitalcast-ui:latest
         ports:
         - containerPort: 8080
         env:
@@ -34,7 +34,7 @@ spec:
         - name: PUBSUB_TOPIC
           value: "signage-queue"
         - name: GCP_PROJECT
-          value: "dcsc2024-437017"
+          value: "<your_gcr_repository/DockerHub>"
         - name: TZ
           value: "America/Denver"  # Set timezone to Denver
         volumeMounts:
@@ -54,7 +54,7 @@ spec:
         - "/cloud_sql_proxy"
         args:
         - "--dir=/cloudsql"
-        - "--instances=dcsc2024-437017:us-central1:digitalcast-postgres=tcp:5432"
+        - "--instances=<your_gcr_repository/DockerHub>:us-central1:digitalcast-postgres=tcp:5432"
         - "--credential_file=/secrets/key-file.json"
         env:
         - name: TZ
@@ -71,12 +71,12 @@ spec:
 
       # Worker container
       - name: worker
-        image: gcr.io/dcsc2024-437017/digitalcast-worker:latest
+        image: gcr.io/<your_gcr_repository/DockerHub>/digitalcast-worker:latest
         env:
         - name: PUBSUB_SUBSCRIPTION
           value: "signage-queue-sub"
         - name: GCP_PROJECT
-          value: "dcsc2024-437017"
+          value: "<your_gcr_repository/DockerHub>"
         - name: TZ
           value: "America/Denver"  # Set timezone to Denver
         volumeMounts:
@@ -86,7 +86,7 @@ spec:
 
       # Display container for rendering media
       - name: display
-        image: gcr.io/dcsc2024-437017/digitalcast-display:latest
+        image: gcr.io/<your_gcr_repository/DockerHub>/digitalcast-display:latest
         ports:
         - containerPort: 8081
         env:
