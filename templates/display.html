@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitalcast - Media Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #445cb4;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        main {
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            max-width: 800px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .media-item {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        video, img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1rem auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .username {
+            font-size: 1rem;
+            color: #555;
+        }
+        .no-media {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Digitalcast</h1>
+        <p>Your seamless solution for digital signage and media display</p>
+    </header>
+    <main>
+        <h1>Media Display</h1>
+        <div id="media-container">
+            <!-- Media content will be dynamically loaded here -->
+        </div>
+    </main>
+
+    <!-- Auto-Refreshing Script -->
+    <script>
+        function fetchMedia() {
+            fetch('/api/media')  // API endpoint for fetching media URLs
+                .then(response => response.json())
+                .then(data => {
+                    const mediaContainer = document.getElementById('media-container');
+                    mediaContainer.innerHTML = '';  // Clear existing media
+                    if (data.media_data.length === 0) {
+                        mediaContainer.innerHTML = `<p class="no-media">No media currently scheduled for display.</p>`;
+                        return;
+                    }
+                    data.media_data.forEach(item => {
+                        const { url, username } = item;
+                        const mediaItem = document.createElement('div');
+                        mediaItem.classList.add('media-item');
+                        if (url.endsWith('.mp4')) {
+                            mediaItem.innerHTML = `
+                                <video controls autoplay>
+                                    <source src="${url}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="username">Uploaded by: ${username}</p>
+                            `;
+                        } else {
+                            mediaItem.innerHTML = `
+                                <img src="${url}" alt="Media">
+                                <p class="username">Uploaded by: ${username}</p>
+                            `;
+                        }
+                        mediaContainer.appendChild(mediaItem);
+                    });
+                })
+                .catch(error => console.error("Error fetching media:", error));
+        }
+
+        setInterval(fetchMedia, 5000);  // Poll every 5 seconds
+        fetchMedia();  // Initial fetch
+    </script>
+</body>
+</html>
