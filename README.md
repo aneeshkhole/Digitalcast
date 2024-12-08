@@ -64,8 +64,7 @@ You need to have a service account setup in order to run this project. Store its
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/cu-csci-4253-datacenter-fall-2024/finalproject-final-project-team-71.git
-   cd digitalcast
+   git clone https://github.com/aneeshkhole/Digitalcast.git
    ```
 2. Set up environment variables for database and GCP credentials.
 3. Build Docker images:
